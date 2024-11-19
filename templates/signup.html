@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img src="/static/images/logo4.png" alt="Logo" />
+            </a>
+        </div>
+    </header>
+    <div style="height: 30px;"></div>
+
+    <!-- Sign Up Section -->
+    <section class="signup-section">
+        <div class="signup-container">
+            <h1>Sign Up</h1>
+            <form action="/buyer/registration" method="post" id="signup-form">
+                <!-- Email Input -->
+                <div class="input-group">
+                    <label for="email">
+                        <img src="/static/images/email-icon.png" alt="Email Icon">
+                        <input type="email" name="email" id="email" placeholder="Email address" required
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                               title="Please enter a valid email address">
+                    </label>
+                </div>
+                
+                <!-- Password Input -->
+                <div class="input-group">
+                    <label for="password">
+                        <img src="/static/images/password-icon.png" alt="Password Icon">
+                        <input type="password" name="password" id="password" placeholder="Password" required>
+                        <!-- <input type="password" name="password" id="password" placeholder="Password" required
+                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}" 
+                               title="Password must be at least 8 characters long and contain an uppercase letter, a lowercase letter, a number, and a special character"> -->
+                    </label>
+                </div>
+
+                <!-- Confirm Password Input -->
+                <div class="input-group">
+                    <label for="confirm-password">
+                        <img src="/static/images/password-icon.png" alt="Confirm Password Icon">
+                        <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                    </label>
+                </div>
+
+                <!-- Phone Number Input -->
+                <div class="input-group">
+                    <label for="phone">
+                        <img src="/static/images/phone-icon.png" alt="Phone Icon">
+                        <input type="text" name="phone" id="phone" placeholder="Phone Number" required
+                               pattern="[0-9]{10}" 
+                               title="Please enter a valid 10-digit phone number">
+                    </label>
+                </div>
+
+                <!-- Name Input -->
+                <div class="input-group">
+                    <label for="name">
+                        <img src="/static/images/name-icon.png" alt="Name Icon">
+                        <input type="text" name="name" id="name" placeholder="Name" required
+                               pattern="[A-Za-z\s]+" 
+                               title="Name can only contain letters and spaces">
+                    </label>
+                </div>
+
+                <!-- Toggle Group for Role Selection -->
+                <div class="toggle-group">
+                    <span class="toggle-label">Buyer</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="role-toggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="toggle-label">Seller</span>
+                </div>
+                <input type="hidden" name="role" id="role" value="buyer">
+
+                <div id="password-warning" class="warning-text"></div>
+                <button type="submit" class="signup-button">Sign Up</button>
+            </form>
+
+            <p class="login-text">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+        </div>
+    </section>
+
+    <div style="height: 30px;"></div>
+
+    {% include 'footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        // Confirm password validation
+        const form = document.getElementById('signup-form');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm-password');
+        const passwordWarning = document.getElementById('password-warning');
+
+        form.addEventListener('submit', function (event) {
+            if (password.value !== confirmPassword.value) {
+                event.preventDefault();
+                passwordWarning.textContent = "Passwords do not match.";
+                passwordWarning.style.color = "red";
+            }
+        });
+    </script>
+</body>
+
+</html>
